@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="API-GATEWAY" target="17" />
+      <module name="AUTH-SERVICE" target="17" />
+      <module name="Restaurant-Service" target="17" />
+      <module name="Service-Registry" target="17" />
+      <module name="USER-SERVICE" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

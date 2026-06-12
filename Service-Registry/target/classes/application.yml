@@ -1,0 +1,13 @@
+server:
+  port: 8761
+
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+  server:
+    enableSelfPreservation: true
+    # Eviction check interval (every 60 seconds)
+    evictionIntervalTimerInMs: 60000
