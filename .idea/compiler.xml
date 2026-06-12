@@ -30,6 +30,13 @@
         <module name="USER-SERVICE" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="API-GATEWAY" target="17" />
+      <module name="AUTH-SERVICE" target="17" />
+      <module name="Restaurant-Service" target="17" />
+      <module name="Service-Registry" target="17" />
+      <module name="USER-SERVICE" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
