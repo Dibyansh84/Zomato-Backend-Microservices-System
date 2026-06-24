@@ -3,6 +3,32 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="API-GATEWAY" />
+        <module name="AUTH-SERVICE" />
+        <module name="Service-Registry" />
+      </profile>
+      <profile name="Annotation profile for Restaurant-Service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.32/lombok-1.18.32.jar" />
+        </processorPath>
+        <module name="Restaurant-Service" />
+      </profile>
+      <profile name="Annotation profile for USER-SERVICE" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+        </processorPath>
+        <module name="USER-SERVICE" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="API-GATEWAY" target="17" />
@@ -11,5 +37,14 @@
       <module name="Service-Registry" target="17" />
       <module name="USER-SERVICE" target="17" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="API-GATEWAY" options="-parameters" />
+      <module name="AUTH-SERVICE" options="-parameters" />
+      <module name="Restaurant-Service" options="-parameters" />
+      <module name="Service-Registry" options="-parameters" />
+      <module name="USER-SERVICE" options="-parameters" />
+    </option>
   </component>
 </project>
