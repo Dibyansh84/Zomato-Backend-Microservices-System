@@ -5,6 +5,7 @@ import com.restaurant_service.DTO.OnboardingStatusResponseDTO;
 import com.restaurant_service.entity.OnboardingStatus;
 import com.restaurant_service.exception.BadRequestException;
 import com.restaurant_service.exception.ResourceNotFoundException;
+import com.restaurant_service.repository.OnboardingStatusCustomRepository;
 import com.restaurant_service.repository.OnboardingStatusJpaRepository;
 import com.restaurant_service.repository.RestaurantJpaRepository;
 import com.restaurant_service.service.OnboardingStatusService;
@@ -12,10 +13,12 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -23,12 +26,15 @@ public class OnboardingServiceImpl implements OnboardingStatusService
 {
     private final OnboardingStatusJpaRepository onboardingStatusJpaRepository;
     private final RestaurantJpaRepository restaurantJpaRepository;
+    private final OnboardingStatusCustomRepository onboardingStatusCustomRepository;
 
     public OnboardingServiceImpl(RestaurantJpaRepository restaurantJpaRepository,
-                                 OnboardingStatusJpaRepository onboardingStatusJpaRepository)
+                                 OnboardingStatusJpaRepository onboardingStatusJpaRepository,
+                                 OnboardingStatusCustomRepository onboardingStatusCustomRepository)
     {
         this.restaurantJpaRepository = restaurantJpaRepository;
         this.onboardingStatusJpaRepository = onboardingStatusJpaRepository;
+        this.onboardingStatusCustomRepository = onboardingStatusCustomRepository;
     }
 
 
@@ -92,5 +98,16 @@ public class OnboardingServiceImpl implements OnboardingStatusService
 
         /* Step 5: Return response*/
         return responseDTO;
+    }
+
+    /* Fetch onboarding history for a restaurant*/
+    @Override
+    @Cacheable(value = "onboardingCache", key = "#restaurantId")
+    public List<OnboardingStatusResponseDTO> getOnboardingStatusHistory(Long restaurantId)
+    {
+        log.info("Fetching onboarding history for restaurant: {}", restaurantId);
+
+        List<OnboardingStatusResponseDTO> statusData = onboardingStatusCustomRepository.getOnboardingStatus(restaurantId);
+        return statusData;
     }
 }

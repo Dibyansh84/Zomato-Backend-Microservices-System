@@ -8,10 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/onboarding")
@@ -31,4 +30,15 @@ public class OnboardingStatusController
         OnboardingStatusResponseDTO statusResponseDTO = onboardingStatusService.updateStatus(requestDTO);
         return ResponseEntity.ok(statusResponseDTO);
     }
+
+    @PostMapping("/getHistory")
+    public ResponseEntity<List<OnboardingStatusResponseDTO>> getHistory(@RequestParam Long restaurantId)
+    {
+        log.info(" Fetching onboarding history ");
+
+        List<OnboardingStatusResponseDTO> getOnboardingStatusHistory =onboardingStatusService.getOnboardingStatusHistory(restaurantId);
+        return ResponseEntity.ok(getOnboardingStatusHistory);
+    }
+
+
 }
