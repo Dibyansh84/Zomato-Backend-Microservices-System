@@ -2,6 +2,7 @@ package com.restaurant_service.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -109,4 +110,27 @@ public class GlobalExceptionHandler
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    // Exception handler for malformed or invalid HTTP request bodies
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, Object>> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex)
+    {
+        // Initialize response map to hold error details
+        Map<String, Object> response = new HashMap<>();
+
+        //Add current timestamp when error occurred
+        response.put("timestamp", LocalDateTime.now());
+
+        //Add HTTP status code (400 BAD_REQUEST)
+        response.put("status", HttpStatus.BAD_REQUEST);
+
+        //Add error type/category
+        response.put("error", "Invalid Request Payload");
+
+        //Add detailed error message from the root cause exception
+        response.put("message", ex.getMostSpecificCause().getMessage());
+
+        //Return error response with BAD_REQUEST status code
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+
+    }
 }
